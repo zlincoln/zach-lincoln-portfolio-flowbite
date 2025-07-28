@@ -1,0 +1,21 @@
+---
+import "./src/styles/global.css";
+import { ThemeModeScript } from "flowbite-react";
+import { ThemeInit } from "../../.flowbite-react/init";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Flowbite React Template Astro</title>
+    <ThemeModeScript />
+  </head>
+  <body>
+    <ThemeInit />
+    <slot />
+  </body>
+</html>
