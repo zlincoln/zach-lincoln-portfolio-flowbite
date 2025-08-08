@@ -21,7 +21,7 @@ const menuIcon =
   "http://localhost:3845/assets/570050f5de5abc9ce350ce0ff95c9de2b6b55d66.svg";
 ---
 
-<div class="flex w-full flex-col border-b border-gray-200 bg-white">
+<div class="flex w-full flex-col border-b border-gray-200 bg-white dark:bg-gray-900 dark:border-gray-700">
   <!-- Top Bar -->
   <div class="w-full px-4 sm:px-6 lg:px-8">
     <div
@@ -30,11 +30,11 @@ const menuIcon =
       <div class="flex flex-wrap items-center gap-4">
         <div class="flex items-center gap-1.5">
           <img src={phoneIcon} alt="" class="h-5 w-5" />
-          <span class="text-sm font-medium text-[#4a5565]">(802) 585-7709</span>
+          <span class="text-sm font-medium text-[#4a5565] dark:text-gray-400">(802) 585-7709</span>
         </div>
         <div class="flex items-center gap-1.5">
           <img src={emailIcon} alt="" class="h-5 w-5" />
-          <span class="text-sm font-medium text-[#4a5565]"
+          <span class="text-sm font-medium text-[#4a5565] dark:text-gray-400"
             >contact@zacharylincoln.com</span
           >
         </div>
@@ -42,12 +42,12 @@ const menuIcon =
       <div class="hidden items-center gap-3 md:flex">
         <a
           href="#"
-          class="flex items-center gap-1.5 text-sm font-medium text-[#1447e6]"
+          class="flex items-center gap-1.5 text-sm font-medium text-[#1447e6] dark:text-blue-500"
         >
           <img src={resumeIcon} alt="" class="h-[18px] w-[18px]" />
           <span>View Resume</span>
         </a>
-        <div class="h-5 w-px bg-gray-200"></div>
+        <div class="h-5 w-px bg-gray-200 dark:bg-gray-700"></div>
         <a href="#"><img src={githubIcon} alt="Github" class="h-5 w-5" /></a>
         <a href="#"><img src={linkedinIcon} alt="LinkedIn" class="h-5 w-5" /></a
         >
@@ -56,37 +56,37 @@ const menuIcon =
   </div>
 
   <!-- Bottom Bar / Main Nav -->
-  <div class="w-full bg-white px-4 py-3 sm:px-6 lg:px-8">
+  <div class="w-full bg-white dark:bg-gray-900 px-4 py-3 sm:px-6 lg:px-8">
     <div class="mx-auto flex max-w-screen-xl items-center justify-between">
       <!-- Logo -->
-      <div class="text-2xl font-semibold text-[#101828]">Zachary Lincoln</div>
+      <div class="text-2xl font-semibold text-[#101828] dark:text-white">Zachary Lincoln</div>
 
       <!-- Desktop Nav Links -->
       <div class="hidden items-center gap-6 md:flex">
         <a
           href="#"
-          class="flex flex-col items-center gap-1.5 text-sm font-medium text-[#4a5565]"
+          class="flex flex-col items-center gap-1.5 text-sm font-medium text-[#4a5565] dark:text-gray-400"
         >
           <img src={homeIcon} alt="" class="h-5 w-5" />
           <span>Home</span>
         </a>
         <a
           href="#"
-          class="flex flex-col items-center gap-1.5 text-sm font-medium text-[#4a5565]"
+          class="flex flex-col items-center gap-1.5 text-sm font-medium text-[#4a5565] dark:text-gray-400"
         >
           <img src={productsIcon} alt="" class="h-5 w-5" />
           <span>Products</span>
         </a>
         <a
           href="#"
-          class="flex flex-col items-center gap-1.5 text-sm font-medium text-[#4a5565]"
+          class="flex flex-col items-center gap-1.5 text-sm font-medium text-[#4a5565] dark:text-gray-400"
         >
           <img src={teamIcon} alt="" class="h-5 w-5" />
           <span>Team</span>
         </a>
         <a
           href="#"
-          class="flex flex-col items-center gap-1.5 text-sm font-medium text-[#4a5565]"
+          class="flex flex-col items-center gap-1.5 text-sm font-medium text-[#4a5565] dark:text-gray-400"
         >
           <img src={aboutIcon} alt="" class="h-5 w-5" />
           <span>About Me</span>
@@ -110,7 +110,7 @@ const menuIcon =
         <button
           data-collapse-toggle="mobile-menu"
           type="button"
-          class="inline-flex items-center justify-center rounded-xl p-2 text-gray-700 md:hidden"
+          class="inline-flex items-center justify-center rounded-xl p-2 text-gray-700 dark:text-gray-400 md:hidden"
         >
           <span class="sr-only">Open main menu</span>
           <img src={menuIcon} class="h-6 w-6" alt="Menu" />
@@ -122,11 +122,11 @@ const menuIcon =
   <!-- Collapsible Mobile Menu -->
   <div class="hidden w-full md:hidden" id="mobile-menu">
     <ul class="flex flex-col gap-4 p-4">
-      <li><a href="#" class="block text-gray-700">Home</a></li>
-      <li><a href="#" class="block text-gray-700">Products</a></li>
-      <li><a href="#" class="block text-gray-700">Team</a></li>
-      <li><a href="#" class="block text-gray-700">About Me</a></li>
-      <li><a href="#" class="block text-gray-700">View Resume</a></li>
+      <li><a href="#" class="block text-gray-700 dark:text-gray-200">Home</a></li>
+      <li><a href="#" class="block text-gray-700 dark:text-gray-200">Products</a></li>
+      <li><a href="#" class="block text-gray-700 dark:text-gray-200">Team</a></li>
+      <li><a href="#" class="block text-gray-700 dark:text-gray-200">About Me</a></li>
+      <li><a href="#" class="block text-gray-700 dark:text-gray-200">View Resume</a></li>
     </ul>
   </div>
 </div>
