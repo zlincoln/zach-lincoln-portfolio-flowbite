@@ -22,3 +22,8 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# Claude Code - ignore personal/temp files, keep shared config
+.claude/*
+!.claude/CLAUDE.md
+!.claude/settings.json
