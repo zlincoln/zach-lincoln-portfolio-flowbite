@@ -42,15 +42,87 @@
         </button>
       </div>
       <!-- Modal body -->
-      <div class="space-y-4 bg-white p-4 md:p-5">
-        <script src="https://js.hsforms.net/forms/embed/48283293.js" defer
-        ></script>
-        <div
-          class="hs-form-frame"
-          data-region="na1"
-          data-form-id="462b0b63-fdab-4f25-8e45-2da5be3c085c"
-          data-portal-id="48283293"
-        >
+      <div class="p-4 md:p-5">
+        <!-- Native contact form -->
+        <div id="native-contact-form">
+          <form id="contact-form" class="space-y-4" novalidate>
+            <!-- Honeypot -->
+            <div class="absolute -left-[9999px]" aria-hidden="true">
+              <label for="website">Website</label>
+              <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
+            </div>
+
+            <div>
+              <label for="contact-name" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+                Name
+              </label>
+              <input
+                type="text"
+                id="contact-name"
+                name="name"
+                required
+                maxlength="200"
+                placeholder="Your name"
+                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+              />
+            </div>
+
+            <div>
+              <label for="contact-email" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+                Email
+              </label>
+              <input
+                type="email"
+                id="contact-email"
+                name="email"
+                required
+                maxlength="254"
+                placeholder="you@example.com"
+                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+              />
+            </div>
+
+            <div>
+              <label for="contact-message" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+                Message
+              </label>
+              <textarea
+                id="contact-message"
+                name="message"
+                required
+                maxlength="5000"
+                rows="4"
+                placeholder="How can I help you?"
+                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+              ></textarea>
+            </div>
+
+            <!-- Status messages -->
+            <div id="form-error" class="hidden rounded-lg bg-red-50 p-4 text-sm text-red-800 dark:bg-red-900/50 dark:text-red-400" role="alert"></div>
+            <div id="form-success" class="hidden rounded-lg bg-green-50 p-4 text-sm text-green-800 dark:bg-green-900/50 dark:text-green-400" role="alert">
+              Message sent! I'll get back to you soon.
+            </div>
+
+            <button
+              type="submit"
+              id="form-submit"
+              class="w-full rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            >
+              Send Message
+            </button>
+          </form>
+        </div>
+
+        <!-- HubSpot fallback -->
+        <div id="hubspot-contact-form" class="hidden">
+          <script src="https://js.hsforms.net/forms/embed/48283293.js" defer></script>
+          <div
+            class="hs-form-frame"
+            data-region="na1"
+            data-form-id="462b0b63-fdab-4f25-8e45-2da5be3c085c"
+            data-portal-id="48283293"
+          >
+          </div>
         </div>
       </div>
     </div>
@@ -58,6 +130,63 @@
 </div>
 
 <script>
-  // JavaScript to handle modal toggling will be added to the main layout
-  // to ensure it's available on all pages where the modal is used.
+  const CONTACT_FORM_MODE: "native" | "hubspot" = "native";
+
+  const nativeEl = document.getElementById("native-contact-form");
+  const hubspotEl = document.getElementById("hubspot-contact-form");
+
+  if (CONTACT_FORM_MODE === "hubspot") {
+    nativeEl?.classList.add("hidden");
+    hubspotEl?.classList.remove("hidden");
+  }
+
+  const form = document.getElementById("contact-form") as HTMLFormElement | null;
+  const errorEl = document.getElementById("form-error");
+  const successEl = document.getElementById("form-success");
+  const submitBtn = document.getElementById("form-submit") as HTMLButtonElement | null;
+
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    if (!form || !errorEl || !successEl || !submitBtn) return;
+
+    // Reset status
+    errorEl.classList.add("hidden");
+    successEl.classList.add("hidden");
+    errorEl.textContent = "";
+
+    // Client-side validation
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    // Loading state
+    submitBtn.disabled = true;
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = "Sending...";
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        body: new FormData(form),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        errorEl.textContent = data.error || "Something went wrong. Please try again.";
+        errorEl.classList.remove("hidden");
+      } else {
+        successEl.classList.remove("hidden");
+        form.reset();
+      }
+    } catch {
+      errorEl.textContent = "Network error. Please check your connection and try again.";
+      errorEl.classList.remove("hidden");
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalText;
+    }
+  });
 </script>
